@@ -6,17 +6,19 @@
     <HomeSwiper class="banner" :banner = 'banner'/>
     <Recommend :recommend = 'recommend'/>
     <Feature/>
-    <TabControl/>
+    <TabControl :title = "['流行','新款','精选']"/>
+    <GoodsList :goods = 'goods.pop'/>
   </div>
 </template>
 
 <script>
+import {multidata,homeGoods} from 'network/home'
 import Navigation from 'components/common/navbar/Navigation'
-import {multidata} from 'network/home'
 import HomeSwiper from './compoents/HomeSwiper'
 import Recommend from './compoents/Recommend'
 import Feature from './compoents/Feature'
 import TabControl from 'components/content/tabControl/TabControl'
+import GoodsList from 'components/content/goods/GoodsList'
 // import axios from 'axios'
 export default {
   name: 'Home',
@@ -25,36 +27,58 @@ export default {
     HomeSwiper,
     Recommend,
     Feature,
-    TabControl
+    TabControl,
+    GoodsList
   },
   data(){
     return{
       banner:[],
-      recommend:[]
+      recommend:[],
+      goods:{
+        pop: {page: 0, list: []},
+        new: {page: 0, list: []},
+        sell: {page: 0, list: []}
+      }
     }
   },
   methods:{
     // get(){
     //   axios({
-    //     url:'https://api-hmugo-web.itheima.net/api/public/v1/home/swiperdata',
+    //     url:'http://152.136.185.210:7878/api/hy66/home/multidata',
     //     method:'get',
     //     params:{
     //     }
     //   }).then(res =>{
     //     console.log(res)
     //   })
-    // }
-    request(){
+    // },
+    getdata(){
       multidata().then(res =>{
-      console.log(res)
+      // console.log(res)
       this.banner = res.data.banner.list
       this.recommend = res.data.recommend.list
       // localStorage.setItem('banner',this.banner[0].goods_id)
-    })
+      })
+    },
+    
+    //请求商品数据
+    getgoods(type){
+      let page = this.goods[type].page+1
+      homeGoods(type,page).then(res => {
+        this.goods[type].list.push(...res.data.list)
+        this.goods[type].page++
+        // console.log(this.goods)
+      })
     }
   },
   created() {
-    this.request()
+    this.getdata()
+
+    this.getgoods('pop')
+
+    this.getgoods('new')
+    
+    this.getgoods('sell')
   },
   mounted() {
     // this.get()
