@@ -22,6 +22,7 @@ export default {
   methods:{
     itemChange(index){
       this.activeIndex = index
+      this.$emit('changeClick',index)
     }
   }
 }

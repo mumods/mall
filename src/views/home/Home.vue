@@ -1,17 +1,19 @@
 <template>
   <div class="home">
+    <BackTop />
     <Navigation class="nav">
       <div slot='center'>购物街</div>
     </Navigation>
     <HomeSwiper class="banner" :banner = 'banner'/>
     <Recommend :recommend = 'recommend'/>
     <Feature/>
-    <TabControl :title = "['流行','新款','精选']"/>
-    <GoodsList :goods = 'goods.pop'/>
+    <TabControl :title = "['流行','新款','精选']" @changeClick='itemChange'/>
+    <GoodsList :goodslist = 'goods[currentType].list'/>
   </div>
 </template>
 
 <script>
+import BetterScroll from 'better-scroll'
 import {multidata,homeGoods} from 'network/home'
 import Navigation from 'components/common/navbar/Navigation'
 import HomeSwiper from './compoents/HomeSwiper'
@@ -19,6 +21,7 @@ import Recommend from './compoents/Recommend'
 import Feature from './compoents/Feature'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
+import BackTop from 'components/content/backTop/BackTop.vue'
 // import axios from 'axios'
 export default {
   name: 'Home',
@@ -28,7 +31,8 @@ export default {
     Recommend,
     Feature,
     TabControl,
-    GoodsList
+    GoodsList,
+    BackTop
   },
   data(){
     return{
@@ -38,7 +42,9 @@ export default {
         pop: {page: 0, list: []},
         new: {page: 0, list: []},
         sell: {page: 0, list: []}
-      }
+      },
+      currentType:'pop',
+      scroll:''
     }
   },
   methods:{
@@ -52,9 +58,22 @@ export default {
     //     console.log(res)
     //   })
     // },
+    handleScroll(){
+      let banner = document.querySelector('.banner')
+      console.log(banner.clientTop)
+    },
+    itemChange(index){
+      switch (index){
+        case 0: this.currentType = 'pop' 
+        break
+        case 1: this.currentType = 'new'
+        break
+        case 2: this.currentType = 'sell'
+        break
+      }
+    },
     getdata(){
       multidata().then(res =>{
-      // console.log(res)
       this.banner = res.data.banner.list
       this.recommend = res.data.recommend.list
       // localStorage.setItem('banner',this.banner[0].goods_id)
@@ -67,7 +86,6 @@ export default {
       homeGoods(type,page).then(res => {
         this.goods[type].list.push(...res.data.list)
         this.goods[type].page++
-        // console.log(this.goods)
       })
     }
   },

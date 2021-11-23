@@ -1,6 +1,6 @@
 <template>
   <div class="goodsList">
-    <GoodsItem v-for="(item,index) in goods.list" :key="index" class="item" :goods = 'item'/>
+    <GoodsItem v-for="(item,index) in goodslist" :key="index" class="item" :goods = 'item'/>
   </div>
 </template>
 <script>
@@ -10,22 +10,20 @@ export default {
     GoodsItem
   },
   props:{
-    goods:{
-      type:Object
+    goodslist:{
+      type:Array
     }
   },
   mounted(){
-    console.log(this.goods)
+    console.log(this.goodslist)
   }
 }
 </script>
 
 <style lang = 'scss'>
   .goodsList{
-    width: 100%;
-    display: flex;
     .item{
-      flex: 1;
+      float: right;
     }
   }
 </style>
