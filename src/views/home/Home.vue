@@ -2,10 +2,10 @@
   <div class="home">
     <BackTop />
     <Navigation class="nav">
-      <div slot='center'>购物街</div>
+      <div slot='center' ref="ss">购物街</div>
     </Navigation>
     <HomeSwiper class="banner" :banner = 'banner'/>
-    <Recommend :recommend = 'recommend'/>
+    <Recommend :recommend = 'recommend' ref="aa"/>
     <Feature/>
     <TabControl :title = "['流行','新款','精选']" @changeClick='itemChange'/>
     <GoodsList :goodslist = 'goods[currentType].list'/>
@@ -100,6 +100,8 @@ export default {
   },
   mounted() {
     // this.get()
+    // console.log(this.$refs.ss)
+    console.log(this.$refs.aa)
   }
 }
 </script>
