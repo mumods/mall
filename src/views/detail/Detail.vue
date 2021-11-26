@@ -1,32 +1,57 @@
 <template>
   <div class="detail">
-      <DetailNavbar/>
-      <DetailBanner :banner = banner />
+      <DetailNavbar class="nav"/>
+      <DetailBanner :banner = 'banner'/>
+      <DetailBaseInfo :goods = 'goods'/>
+      <DetailShopInfo :shop = 'shopInfo'/>
+      <DetailGoodsInfo :detailInfo = 'detailInfo'/>
+      <DetailParamInfo/>
   </div>
 </template>
 
 <script>
 import DetailNavbar from './compoents/DetailNavbar'
 import DetailBanner from './compoents/DetailBanner'
-import {detail} from 'network/detail'
+import DetailBaseInfo from './compoents/DetailBaseInfo'
+import DetailShopInfo from './compoents/DetailShopInfo'
+import DetailGoodsInfo from './compoents/DetailGoodsInfo'
+import DetailParamInfo from './compoents/DetailParamInfo'
+import {detail,goodsInfo,shopInfo} from 'network/detail'
 export default {
     name:'Detail',
     components:{
         DetailNavbar,
-        DetailBanner
+        DetailBanner,
+        DetailBaseInfo,
+        DetailShopInfo,
+        DetailGoodsInfo,
+        DetailParamInfo
     },
     data(){
         return {
             iid:'',
-            banner:[]
+            banner:[],
+            goods:{},
+            shopInfo:{},
+            detailInfo:{}
         }
     },
     methods:{
         getDetail(){
             detail(this.iid).then(res=>{
                 console.log(res)
+                let data = res.result
             //获取banner
-            this.banner = res.result.itemInfo.topImages
+            this.banner = data.itemInfo.topImages
+
+            //获取详情数据
+            this.goods = new goodsInfo(data.itemInfo,data.columns,data.shopInfo.services)
+
+            //商店信息
+            this.shopInfo = new shopInfo(data.shopInfo)
+
+            //详情信息
+            this.detailInfo = data.detailInfo
         })
         }
     },
@@ -40,6 +65,19 @@ export default {
 </script>
 
 <style lang = 'scss'>
+.nav{
+    position: fixed;
+    background-color: #fff;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 9;
+  }
+.detail{
+    position: relative;
+    z-index: 9;
+    background-color: #fff;
+}
     .active{
         color: pink;
     }
