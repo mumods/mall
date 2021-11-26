@@ -25,15 +25,18 @@ export default {
         box-shadow: 0 -1px 4px rgba($color: #000000, $alpha: .6);
         .left{
             width: 15%;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
         }
         .center{
             width: 70%;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-around;
         }
         .right{
             width: 15%;
+            text-align: center;
         }
     }
 </style>

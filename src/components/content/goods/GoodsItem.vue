@@ -1,8 +1,6 @@
 <template>
-  <div class="goodsItem">
-     <a :href="goods.link">
+  <div class="goodsItem" @click="detail">
        <img :src="goods.show.img" alt="">
-     </a>
      <div class="title">{{goods.title}}</div>
      <div>
        <span class="price">{{goods.price}}</span>&#8195
@@ -20,7 +18,13 @@ export default {
   },
   data(){
     return {
-
+      
+    }
+  },
+  methods:{
+    detail(){
+      this.$router.push('/detail/'+this.goods.iid)
+      // this.$router.push({path:'/detail',query:{iid:this.goods.iid}})
     }
   },
   mounted(){
@@ -46,13 +50,11 @@ export default {
     padding: 10px 0;
     /* border-bottom: 1px solid #f1f1f1; */
   }
-  a{
       img{
         width: calc(375px / 2 - 15px);
         border-radius: 5px;
         margin-bottom: 5px;
       }
-    }
   .title{
     white-space: nowrap;
     overflow: hidden;
