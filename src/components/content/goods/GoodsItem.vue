@@ -33,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang = 'scss'>
+<style lang = 'scss' scoped>
   .goodsItem:nth-child(2n-1){
     background-color: #000;
     box-sizing: border-box;

@@ -2,10 +2,10 @@
   <Navbar>
     <img @click="back" slot="left" src="~assets/img/common/back.svg" alt="" />
     <div
-      class="center"
+    style="font-size:13px"
       slot="center"
       @click="itemChange(index)"
-      :class="[item, { active: index === currentIndex }]"
+      :class="[item,{active: index === currentIndex }]"
       v-for="(item, index) in nav"
       :key="index"
     >
@@ -57,5 +57,30 @@ export default {
 };
 </script>
 
-<style>
+<style lang = 'scss' scoped>
+.navigation{
+    position: fixed;
+    background-color: #fff;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    .active{
+        color: pink;
+    }
+    .left{
+        img{
+            width: 20px;
+            text-align: center;
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+    
+  }
+  .item{
+        padding: 0 15px;
+        color: #000;
+        font-size: 12px;
+    }
 </style>

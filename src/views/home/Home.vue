@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <BackTop />
-    <Navigation class="nav">
+    <Navigation>
       <div slot='center'>购物街</div>
     </Navigation>
     <HomeSwiper class="banner" :banner = 'banner'/>
@@ -16,9 +16,9 @@
 import BetterScroll from 'better-scroll'
 import {multidata,homeGoods} from 'network/home'
 import Navigation from 'components/common/navbar/Navigation'
-import HomeSwiper from './compoents/HomeSwiper'
-import Recommend from './compoents/Recommend'
-import Feature from './compoents/Feature'
+import HomeSwiper from './components/HomeSwiper'
+import Recommend from './components/Recommend'
+import Feature from './components/Feature'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
 import BackTop from 'components/content/backTop/BackTop.vue'
@@ -60,7 +60,7 @@ export default {
     // },
     handleScroll(){
       let banner = document.querySelector('.banner')
-      console.log(banner.clientTop)
+      // console.log(banner.clientTop)
     },
     itemChange(index){
       switch (index){
@@ -105,13 +105,12 @@ export default {
   }
 }
 </script>
-script
-<style lang = "scss">
+<style lang = "scss" scoped>
 .home{
   margin-top: 40px;
   
 }
-  .nav{
+  .navigation{
     background-color: pink;
     color: #fff;
     position: fixed;

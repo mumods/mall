@@ -1,22 +1,25 @@
 <template>
   <div class="detail">
-      <DetailNavbar class="nav"/>
+      <DetailNavbar/>
       <DetailBanner :banner = 'banner'/>
       <DetailBaseInfo :goods = 'goods'/>
       <DetailShopInfo :shop = 'shopInfo'/>
       <DetailGoodsInfo :detailInfo = 'detailInfo'/>
       <DetailParamInfo/>
+      <DetailBottom @addcart = 'addcart'/>
   </div>
 </template>
 
 <script>
-import DetailNavbar from './compoents/DetailNavbar'
-import DetailBanner from './compoents/DetailBanner'
-import DetailBaseInfo from './compoents/DetailBaseInfo'
-import DetailShopInfo from './compoents/DetailShopInfo'
-import DetailGoodsInfo from './compoents/DetailGoodsInfo'
-import DetailParamInfo from './compoents/DetailParamInfo'
+import DetailNavbar from './components/DetailNavbar'
+import DetailBanner from './components/DetailBanner'
+import DetailBaseInfo from './components/DetailBaseInfo'
+import DetailShopInfo from './components/DetailShopInfo'
+import DetailGoodsInfo from './components/DetailGoodsInfo'
+import DetailParamInfo from './components/DetailParamInfo'
+import DetailBottom from './components/DetailBottom'
 import {detail,goodsInfo,shopInfo} from 'network/detail'
+
 export default {
     name:'Detail',
     components:{
@@ -25,7 +28,8 @@ export default {
         DetailBaseInfo,
         DetailShopInfo,
         DetailGoodsInfo,
-        DetailParamInfo
+        DetailParamInfo,
+        DetailBottom
     },
     data(){
         return {
@@ -33,7 +37,8 @@ export default {
             banner:[],
             goods:{},
             shopInfo:{},
-            detailInfo:{}
+            detailInfo:{},
+            dat:''
         }
     },
     methods:{
@@ -41,6 +46,7 @@ export default {
             detail(this.iid).then(res=>{
                 console.log(res)
                 let data = res.result
+                this.info = res.result
             //获取banner
             this.banner = data.itemInfo.topImages
 
@@ -53,6 +59,17 @@ export default {
             //详情信息
             this.detailInfo = data.detailInfo
         })
+        },
+        addcart(){
+            const itemInfo = {}
+            itemInfo.image = this.banner[0]
+            itemInfo.desc = this.info.itemInfo.desc
+            itemInfo.title = this.info.skuInfo.title
+            itemInfo.price = this.info.itemInfo.lowPrice
+            itemInfo.iid = this.info.itemInfo.iid
+            itemInfo.count = 1
+            this.$store.commit('addList',itemInfo)
+            console.log(this.$store.state.storeList)
         }
     },
     mounted(){
@@ -64,32 +81,11 @@ export default {
 }
 </script>
 
-<style lang = 'scss'>
-.nav{
-    position: fixed;
-    background-color: #fff;
-    left: 0;
-    top: 0;
-    right: 0;
-    z-index: 9;
-  }
+<style lang = 'scss' scoped>
 .detail{
     position: relative;
     z-index: 9;
     background-color: #fff;
 }
-    .active{
-        color: pink;
-    }
-    .left{
-        img{
-            width: 20px;
-            text-align: center;
-            height: 40px;
-            line-height: 40px;
-        }
-    }
-    .center{
-        padding: 0 15px;
-    }
+
 </style>
