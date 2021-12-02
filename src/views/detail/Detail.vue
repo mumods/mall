@@ -44,7 +44,7 @@ export default {
     methods:{
         getDetail(){
             detail(this.iid).then(res=>{
-                console.log(res)
+                // console.log(res)
                 let data = res.result
                 this.info = res.result
             //获取banner
@@ -68,8 +68,9 @@ export default {
             itemInfo.price = this.info.itemInfo.lowPrice
             itemInfo.iid = this.info.itemInfo.iid
             itemInfo.count = 1
+            itemInfo.checked = true
             this.$store.commit('addList',itemInfo)
-            console.log(this.$store.state.storeList)
+            // console.log(this.$store.state.storeList)
         }
     },
     mounted(){

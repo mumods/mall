@@ -1,8 +1,8 @@
 <template>
     <div class="list">
       <div class="item" v-for="(item,index) in cart" :key="index">
-        <div class="chose">
-          <input type="checkbox">
+        <div class="chose" @click="checkedChange(index)">
+          <checked :isChecked = 'item.checked'/>
         </div>
         <div class="img">
           <img :src="item.image" alt="">
@@ -20,9 +20,10 @@
 </template>
 
 <script>
+import checked from 'components/common/checked/checked'
 export default {
   components: {
-
+    checked
   },
   props:{
     
@@ -33,7 +34,15 @@ export default {
     };
   },
   methods: {
-    
+    checkedChange(index){
+      this.cart[index].checked = !this.cart[index].checked
+          if(this.cart.every(item=>{item.checked==true})){
+            
+            }
+          else {
+            
+          }
+    }
   },
   created(){
     

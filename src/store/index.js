@@ -8,21 +8,29 @@ export default new Vuex.Store({
     storeList:[]
   },
   mutations: {
-    addList(state,payLoad){
+    addList(state,itemInfo){
+      let i=0
       if(state.storeList.length != 0){
          state.storeList.forEach((item)=>{
-        if(item.iid === payLoad.iid){
-          item.count += 1
+          if(item.iid === itemInfo.iid){
+            item.count = item.count + 1
+            i++
+          }
+        })
+        if(i==0){
+          state.storeList.push(itemInfo)
         }
-        else{
-          state.storeList.push(payLoad)
-        }
+      }
+      else{
+        state.storeList.push(itemInfo)
+      }
+    },
+    selectAll(state,payLoad){
+      state.storeList.forEach(item =>{
+        item.checked = payLoad
       })
     }
-    else{
-      state.storeList.push(payLoad)
-    }
-  }},
+},
   actions: {
   },
   getters:{

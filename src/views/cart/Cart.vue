@@ -4,16 +4,19 @@
       <div slot='center'>购物街({{cartCount}})</div>
     </Navbar>
     <CartList/>
+    <Total/>
   </div>
 </template>
 <script>
 import Navbar from "components/common/navbar/Navigation"
 import CartList from './components/CartList'
+import Total from './components/Total'
 export default {
   name: 'Home',
   components: {
     CartList,
-    Navbar
+    Navbar,
+    Total
   },
   data(){
     return{
