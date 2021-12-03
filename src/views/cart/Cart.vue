@@ -27,6 +27,9 @@ export default {
     cartCount(){
      return this.$store.state.storeList.length
     }
+  },
+  mounted(){
+    
   }
 }
 </script>

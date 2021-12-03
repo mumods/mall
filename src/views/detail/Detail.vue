@@ -38,7 +38,8 @@ export default {
             goods:{},
             shopInfo:{},
             detailInfo:{},
-            dat:''
+            dat:'',
+            cartData:[]
         }
     },
     methods:{
@@ -70,6 +71,12 @@ export default {
             itemInfo.count = 1
             itemInfo.checked = true
             this.$store.commit('addList',itemInfo)
+            
+            this.cartData = localStorage.getItem('cartData')||[]
+            console.log(this.cartData)
+            this.cartData.push(this.$store.state.storeList)
+            console.log(this.cartData)
+            // localStorage.setItem('cartData',cartData)
             // console.log(this.$store.state.storeList)
         }
     },
@@ -78,6 +85,7 @@ export default {
     },
     created(){
         this.iid = this.$route.params.iid
+            // localStorage.setItem('cartData',this.cartData)
     }
 }
 </script>

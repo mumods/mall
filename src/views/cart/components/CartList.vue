@@ -48,7 +48,8 @@ export default {
     
   },
   mounted(){
-    this.cart = this.$store.state.storeList
+    // this.cart = this.$store.state.storeList
+    this.cart = localStorage.getItem('cartData')
     console.log(this.cart)
   }
 };
